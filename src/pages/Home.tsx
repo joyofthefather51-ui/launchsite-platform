@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   Briefcase,
@@ -119,8 +119,8 @@ export default function Home() {
           <span className="font-serif text-lg font-semibold">Launchsite</span>
         </div>
         <div className="flex items-center gap-6 text-sm font-medium text-ink/80">
-          <Link href="/" className="hover:text-ink">Home</Link>
-          <Link href="/pricing" className="hover:text-ink">Pricing</Link>
+          <Link to="/" className="hover:text-ink">Home</Link>
+          <Link to="/pricing" className="hover:text-ink">Pricing</Link>
         </div>
       </nav>
 
@@ -179,7 +179,7 @@ export default function Home() {
             nothing. You pay only after two weeks of use and satisfaction.
           </p>
           <Link
-            href="/onboarding"
+            to="/onboard"
             className="mt-6 inline-flex items-center gap-2 rounded-full bg-olive px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-olive-dark"
           >
             Build My Site Free <ArrowRight className="h-4 w-4" />
@@ -231,7 +231,7 @@ export default function Home() {
 
         <div className="mt-10 flex justify-center">
           <Link
-            href="/onboarding"
+            to="/onboard"
             className="inline-flex items-center gap-2 rounded-full bg-olive px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-olive-dark"
           >
             Get Started Free <ArrowRight className="h-4 w-4" />
@@ -269,7 +269,7 @@ export default function Home() {
 
         <div className="mt-10 flex justify-center">
           <Link
-            href="/onboarding"
+            to="/onboard"
             className="inline-flex items-center gap-2 rounded-full bg-olive px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-olive-dark"
           >
             See All Templates <ArrowRight className="h-4 w-4" />

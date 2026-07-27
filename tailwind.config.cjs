@@ -17,8 +17,8 @@ module.exports = {
         muted: '#8C8677',
       },
       fontFamily: {
-        serif: ['var(--font-display)', 'Georgia', 'serif'],
-        sans: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['Fraunces', 'Georgia', 'serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },
