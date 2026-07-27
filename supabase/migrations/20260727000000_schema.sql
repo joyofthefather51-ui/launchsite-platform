@@ -15,6 +15,14 @@ CREATE TABLE sites (
     nomenclature_profile VARCHAR(50) DEFAULT 'legal',
     is_paid BOOLEAN DEFAULT true,
     trial_ends_at TIMESTAMP WITH TIME ZONE DEFAULT (NOW() + INTERVAL '14 days'),
+    business_name VARCHAR(255) NOT NULL,
+    owner_name VARCHAR(255) NOT NULL,
+    tagline VARCHAR(255) DEFAULT NULL,
+    most_requested_service VARCHAR(255) DEFAULT NULL,
+    highest_margin_service VARCHAR(255) DEFAULT NULL,
+    phone VARCHAR(50) DEFAULT NULL,
+    email VARCHAR(255) NOT NULL,
+    address TEXT DEFAULT NULL,
     seo_meta_title VARCHAR(255) DEFAULT NULL,
     seo_meta_description TEXT DEFAULT NULL,
     seo_custom_keywords TEXT[] DEFAULT '{}',
@@ -64,3 +72,23 @@ CREATE TABLE white_glove_fulfillment (
     seo_intake_pass_completed BOOLEAN DEFAULT false,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+-- Row Level Security
+-- These tables are queried with the public anon key from client/server code.
+-- Without RLS, Supabase's PostgREST layer exposes every row to anyone who
+-- has the anon key (it ships in client bundles), so lock everything down by
+-- default and only open the one policy the public onboarding flow needs.
+ALTER TABLE sites ENABLE ROW LEVEL SECURITY;
+ALTER TABLE site_variant_scores ENABLE ROW LEVEL SECURITY;
+ALTER TABLE system_config ENABLE ROW LEVEL SECURITY;
+ALTER TABLE social_content_suggestions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE white_glove_fulfillment ENABLE ROW LEVEL SECURITY;
+
+-- Public onboarding form is allowed to create a site record, but cannot
+-- read/update/delete any site data (including other customers' rows).
+-- Admin/dashboard access goes through the service-role key, which bypasses
+-- RLS entirely, so no other policies are needed on these tables.
+CREATE POLICY "Public can submit onboarding" ON sites
+    FOR INSERT
+    TO anon
+    WITH CHECK (true);

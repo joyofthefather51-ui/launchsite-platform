@@ -1,9 +1,22 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase-admin';
 
-export async function GET() {
+function isAuthorized(request: Request): boolean {
+  const adminSecret = process.env.ADMIN_API_SECRET;
+  if (!adminSecret) return false;
+
+  const header = request.headers.get('authorization') ?? '';
+  const token = header.startsWith('Bearer ') ? header.slice('Bearer '.length) : '';
+  return token === adminSecret;
+}
+
+export async function GET(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   try {
-    const { data: sites, error } = await supabase
+    const { data: sites, error } = await supabaseAdmin
       .from('sites')
       .select('*')
       .eq('status', 'pending_review')

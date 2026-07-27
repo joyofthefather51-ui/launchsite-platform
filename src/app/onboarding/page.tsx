@@ -124,11 +124,11 @@ export default function OnboardingPage() {
             <p className="text-gray-600">Tell us about your business. This will populate your site's content.</p>
             <div>
               <label htmlFor="businessName" className="block text-sm font-medium text-gray-700">Firm/Business Name</label>
-              <input type="text" name="businessName" id="businessName" value={formData.businessName} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              <input required type="text" name="businessName" id="businessName" value={formData.businessName} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
             </div>
             <div>
               <label htmlFor="ownerName" className="block text-sm font-medium text-gray-700">Owner Name</label>
-              <input type="text" name="ownerName" id="ownerName" value={formData.ownerName} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              <input required type="text" name="ownerName" id="ownerName" value={formData.ownerName} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
             </div>
             <div>
               <label htmlFor="tagline" className="block text-sm font-medium text-gray-700">Tagline</label>
@@ -155,7 +155,7 @@ export default function OnboardingPage() {
             </div>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
-              <input type="email" name="email" id="email" value={formData.email} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              <input required type="email" name="email" id="email" value={formData.email} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
             </div>
             <div>
               <label htmlFor="address" className="block text-sm font-medium text-gray-700">Physical Address (Optional)</label>

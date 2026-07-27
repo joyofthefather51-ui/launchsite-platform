@@ -1,30 +1,47 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase-admin';
+
+function getStringField(formData: FormData, key: string): string {
+  const value = formData.get(key);
+  return typeof value === 'string' ? value.trim() : '';
+}
 
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
 
+    const businessName = getStringField(formData, 'businessName');
+    const ownerName = getStringField(formData, 'ownerName');
+    const email = getStringField(formData, 'email');
+
+    if (!businessName || !ownerName || !email) {
+      return NextResponse.json(
+        { error: 'Business name, owner name, and email are required.' },
+        { status: 400 }
+      );
+    }
+
     // NOTE: File handling (e.g., uploading to Supabase Storage) is omitted for now.
-    // We are focusing on creating the database record.
 
     const whiteGlove = formData.get('whiteGlove') === 'true';
     const photoShoot = formData.get('photoShoot') === 'true';
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('sites')
       .insert([
         {
-          // We'll need a user_id column eventually, but skipping for now.
-          // In a real app, this would be linked to the authenticated user.
-          // owner_name: formData.get('ownerName'), // Assuming a column name
-          // business_name: formData.get('businessName'), 
+          business_name: businessName,
+          owner_name: ownerName,
+          tagline: getStringField(formData, 'tagline') || null,
+          most_requested_service: getStringField(formData, 'mostRequestedService') || null,
+          highest_margin_service: getStringField(formData, 'highestMarginService') || null,
+          phone: getStringField(formData, 'phone') || null,
+          email,
+          address: getStringField(formData, 'address') || null,
           plan_tier: 'associate', // Default plan
           status: 'pending_review',
           white_glove_status: whiteGlove ? 'purchased' : 'not_purchased',
           photo_shoot_addon_purchased: photoShoot,
-          // We would also save other form data like name, email, etc.
-          // to columns that we would need to add to the 'sites' table.
         },
       ])
       .select()
