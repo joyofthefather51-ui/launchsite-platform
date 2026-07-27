@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase-admin';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 
 function getStringField(formData: FormData, key: string): string {
   const value = formData.get(key);
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     const whiteGlove = formData.get('whiteGlove') === 'true';
     const photoShoot = formData.get('photoShoot') === 'true';
 
-    const { data, error } = await supabaseAdmin
+    const { data, error } = await getSupabaseAdmin()
       .from('sites')
       .insert([
         {

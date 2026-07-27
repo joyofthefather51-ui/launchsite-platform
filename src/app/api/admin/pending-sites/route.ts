@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase-admin';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 
 function isAuthorized(request: Request): boolean {
   const adminSecret = process.env.ADMIN_API_SECRET;
@@ -16,7 +16,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const { data: sites, error } = await supabaseAdmin
+    const { data: sites, error } = await getSupabaseAdmin()
       .from('sites')
       .select('*')
       .eq('status', 'pending_review')
